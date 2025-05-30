@@ -159,21 +159,11 @@ def checkTwoPair():
     return False
     
 def checkFourOfaKind():
-    count = 0
-    sort_card = sorted(drawn, key=lambda x: x.Rank, reverse= False)
-    k = 0 
-    j = 1 
-    #
-    while k < 5 and j < 5:
-        if sort_card[k].Rank == sort_card[j].Rank:
-                    count = count + 1        
-        k = k + 1
-        j = j + 1
-
-    if count == 3:
-        return True
-
-    
+    sort_card = sorted(drawn, key=lambda x: x.Rank, reverse=False)
+    # Check each set of four consecutive cards
+    for k in range(2):  # 0 to 1, since 5 - 4 = 1
+        if (sort_card[k].Rank == sort_card[k + 1].Rank == sort_card[k + 2].Rank == sort_card[k + 3].Rank):
+            return True
     return False
 
 def checkThreeOfaKind():
@@ -214,7 +204,7 @@ def draw():
     i = 0
     while i < 5:
         card = generateCard()
-        while card  in drawn:
+        while any(x.Rank == card.Rank and x.Suit == card.Suit for x in drawn):
             card = generateCard()
         drawn.append(card)
         
@@ -316,8 +306,8 @@ def check():
 #draw()
 
 
-draw()
 
+draw()
 
 
 
