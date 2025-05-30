@@ -138,38 +138,23 @@ def checkTwoPair():
     sort_card = sorted(drawn, key=lambda x: x.Rank, reverse=False)
     k = 0 
     j = 1 
-    #
-    while k < len(sort_card) - 1:  # Ensure k and j stay within bounds
+    # First loop to find the first pair
+    while k < len(sort_card) - 1:
         if sort_card[k].Rank == sort_card[j].Rank:
-            countx = countx + 1    
-
-        elif k == 0 and sort_card[k].Rank != sort_card[j].Rank: #for the first loop if things are different
-             pass
-
-            
-        elif k != 0 and sort_card[k].Rank != sort_card[j].Rank:
-            k = k + 1
-            j = k + 1 
-            break
+            countx = 1    # Found first pair
+            k = k + 2     # Skip past the pair
+            j = k + 1
+            break         # Move to second loop after first pair
         k = k + 1
-        j = k + 1  # j is always k + 1
-
-
-    while k < len(sort_card) - 1:  # Reset or adjust for second loop
+        j = k + 1
+    # Second loop to find the second pair, continue past different values
+    while k < len(sort_card) - 1:
         if sort_card[k].Rank == sort_card[j].Rank:
-            county = county + 1     
-            
-        else:
-            k = k + 1
-            j = k + 1 
-            break
-        k = k + 1
-        j = k + 1  # j is always k + 1
-
-    
-
-    # Assuming intent was: one group of 3 (countx = 2 matches) and one of 2 (county = 1 match)
-    if (countx == 1 and county == 1):
+            county = 1    # Found second pair
+            break         # Stop after second pair
+        k = k + 1         # Continue if no pair
+        j = k + 1
+    if countx == 1 and county == 1:
         return True
     return False
     
