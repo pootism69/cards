@@ -239,7 +239,7 @@ def draw():
     check()
 
     for card in drawn:
-        if (card.Rank == 1):
+        if (card.Rank == 1 or card.Rank == 14):
             card.Rank = 'A'
         if (card.Rank == 11):
             card.Rank = 'J'
@@ -251,6 +251,11 @@ def draw():
         
     print(output)
     
+def effective_rank(card):
+    if card.Rank == 1:
+        return 14  # Ace is higher than King (13)
+    else:
+        return card.Rank
 
 def check():
     royal = checkRoyalStraightFlush()
@@ -299,8 +304,13 @@ def check():
     else:
         high = True
         print("High Card of : ")
+        for card in drawn:
+            card.Rank = effective_rank(card)
+        
         high_card = max(drawn, key=lambda obj: obj.Rank)
-        if (high_card.Rank == 1):
+        
+
+        if (high_card.Rank == 14):
             high_card.Rank = 'A'
         if (high_card.Rank == 11):
             high_card.Rank = 'J'
@@ -308,6 +318,7 @@ def check():
             high_card.Rank = 'Q'
         if (high_card.Rank == 13):
             high_card.Rank = 'K'
+        
 
         print(high_card.Rank, high_card.Suit)
         
